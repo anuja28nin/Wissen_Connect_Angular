@@ -1,0 +1,82 @@
+<div class="col-md-12">
+  <div class="card card-container">
+    <form
+      *ngIf="!isLoggedIn"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+      <label class=" card-container" ><strong>Hello there, Sign In to Continue</strong></label>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="text"
+          class="form-control"
+          name="email"
+          [(ngModel)]="form.email"
+          required
+          #email="ngModel"
+        />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="email.errors && f.submitted"
+        >
+          email is required!
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          [(ngModel)]="form.password"
+          required
+          minlength="6"
+          #password="ngModel"
+        />
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="password.errors && f.submitted"
+        >
+          <div *ngIf="password.errors['required']">Password is required</div>
+          <div *ngIf="password.errors['minlength']">
+            Password must be at least 6 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class ="jj">
+          <input type="checkbox"
+                 Checked={this.state.isChecked}
+                 onChange={this.toggleChange}
+          />
+          By creating and logging into an account, you are agreeing with our <b>Terms & Conditions </b>and <b>Privacy Policy</b>
+        </label>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">
+          Next
+        </button>
+      </div>
+      <br>
+      <label style="text-align-all: center"><strong>Signing with company SSO</strong></label>
+      <div class="form-group">
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngIf="f.submitted && isLoginFailed"
+        >
+          User not found: {{ errorMessage }}
+        </div>
+      </div>
+    </form>
+
+    <div class="alert alert-success" *ngIf="isLoggedIn">
+      Loggin Successful !!{{ roles }}
+    </div>
+  </div>
+</div>
